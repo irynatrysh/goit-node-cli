@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 
-const contactPath = path.join(process.cwd(), "src/db/contacts.json");
+const contactPath = path.join(process.cwd(), "db/contacts.json");
 
 async function listContacts() {
     return JSON.parse(await fs.readFile(contactPath, "utf-8"));
@@ -19,7 +19,7 @@ async function removeContact(contactId) {
     if (removedContact) {
         const updatedContacts = contacts.filter((contact) => contact.id !== contactId);
         await fs.writeFile(contactPath, JSON.stringify(updatedContacts, null, 2));
-        return removeContact;
+        return removedContact;
     } else {
         return null;
     }

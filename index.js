@@ -14,37 +14,26 @@ const options = program.opts();
 
 // TODO: рефакторити
 async function invokeAction({ action, id, name, email, phone }) {
-  try {
     switch (action) {
       case "list":
-        const allContacts = await listContacts();
-        console.table(allContacts);
+        console.table(await listContacts());
         break;
 
       case "get":
-        const contactById = await getContactById(id);
-        console.log(contactById || "Contact not found");
+        console.log( "contact by ID:>>", await getContactById(id));
         break;
 
       case "add":
-        const newContact = await addContact(name, email, phone);
-        console.log("Contact created:", newContact);
+        console.log("Contact created:>>", await addContact(name, email, phone));
         break;
 
       case "remove":
-        const removedContact = await removeContact(id);
-        console.log(
-          removedContact ? "Contact removed:" : "Contact not found"
-        );
+        console.log("remove Contact:>>", await removeContact(id));
         break;
 
       default:
         console.warn("\x1B[31m Unknown action type!");
     }
   }
-  catch (error) {
-    console.error("Error:", error.message);
-  }
-}
-
+ 
 invokeAction(options);
